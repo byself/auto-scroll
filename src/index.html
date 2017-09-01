@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>自动滚动</title>
+
+    <style>
+        body{
+            background-color: #ddd;
+        }
+
+        .scrollBox{
+            height:245px;
+            overflow: hidden;
+        }
+
+        .scrollBox ul{
+            margin: 0;
+            padding: 0;
+            list-style: none;
+            overflow: hidden;
+        }
+
+        .scrollBox li{
+            margin-bottom: 15px;
+            background-color: #fff;
+        }
+
+        .scrollBox .title{
+            padding: 15px 20px;
+            height: 20px;
+            line-height: 20px;
+            font-size: 16px;
+            color: #333;
+            cursor: pointer;
+        }
+
+        .scrollBox .title:hover{
+            background-color: #eee;
+        }
+
+        .scrollBox .text{
+            display: none;
+            padding: 15px 20px;
+            font-size: 14px;
+            line-height: 20px;
+            color: #666;
+        }
+
+        .scrollBox li.on .title{
+            background-color: #333;
+            color: #fff;
+        }
+
+        .scrollBox li.on .text{
+            display: block;
+        }
+
+    </style>
+
+</head>
+<body>
+
+    <div class="scrollBox">
+        <div class="items">
+            <ul>
+                <li>
+                    <div class="title">
+                        这是标题1
+                    </div>
+                    <div class="text">
+                        这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容
+                    </div>
+                </li>
+                <li>
+                    <div class="title">
+                        这是标题2
+                    </div>
+                    <div class="text">
+                        这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容
+                    </div>
+                </li>
+                <li>
+                    <div class="title">
+                        这是标题3
+                    </div>
+                    <div class="text">
+                        这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容
+                    </div>
+                </li>
+                <li>
+                    <div class="title">
+                        这是标题
+                    </div>
+                    <div class="text">
+                        这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容
+                    </div>
+                </li>
+                <li>
+                    <div class="title">
+                        这是标题
+                    </div>
+                    <div class="text">
+                        这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容
+                    </div>
+                </li>
+                <li>
+                    <div class="title">
+                        这是标题
+                    </div>
+                    <div class="text">
+                        这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容
+                    </div>
+                </li>
+                <li>
+                    <div class="title">
+                        这是标题
+                    </div>
+                    <div class="text">
+                        这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容这是内容
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script>
+
+        function autoScroll(){
+            var $box = $(".scrollBox");
+            var scrollTop = 0;
+
+            // 第一个item 元素
+            var $item;
+
+            //第一个items的高度
+            var itemsHeight = 0;
+
+            // 滚动速度，值越小，滚动越快
+            var speed = 25;
+
+            var scroll = function(){
+                $item = $(".scrollBox .items").eq(0);
+                itemsHeight = $item.height();
+                scrollTop = $box.scrollTop();
+
+                if(scrollTop == itemsHeight){
+                    $box.scrollTop(0);
+                    $(".scrollBox").append($item.clone());
+                    $item.remove();
+                }else{
+                    $box.scrollTop(scrollTop+1);
+                }
+            };
+
+            // 复制
+            $box.append($(".items").clone());
+
+            //  自动滚动，speed设定滚动速度
+            var timer = setInterval(scroll, speed);
+
+
+            /* 绑定事件 */
+
+            // 鼠标划过不滚动
+            $box.on("mouseover", function(){
+                clearInterval(timer);
+            });
+
+            // 鼠标离开后继续滚动
+            $box.on("mouseleave", function(){
+                timer = setInterval(scroll, speed);
+            });
+
+            // 点击展开收起
+            $box.on("click", "li", function(){
+                var $li = $(this);
+                if($li.hasClass("on")){
+                    $li.removeClass("on");
+                }else{
+                    $(".scrollBox li").removeClass("on");
+                    $li.addClass("on");
+                }
+
+            })
+
+        }
+
+        $(function(){
+            autoScroll();
+        })
+    </script>
+
+</body>
+</html>
