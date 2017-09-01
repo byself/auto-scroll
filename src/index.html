@@ -27,12 +27,34 @@
         }
 
         .scrollBox .title{
+            position: relative;
             padding: 15px 20px;
             height: 20px;
             line-height: 20px;
             font-size: 16px;
             color: #333;
             cursor: pointer;
+        }
+
+        .scrollBox .title::before,
+        .scrollBox .title::after{
+            content: '';
+            position: absolute;
+            background-color: #333;
+        }
+
+        .scrollBox .title::before{
+            top: 23px;
+            right: 20px;
+            width: 18px;
+            height: 4px;
+        }
+
+        .scrollBox .title::after{
+            top: 16px;
+            right: 27px;
+            width: 4px;
+            height: 18px;
         }
 
         .scrollBox .title:hover{
@@ -50,6 +72,14 @@
         .scrollBox li.on .title{
             background-color: #333;
             color: #fff;
+        }
+
+        .scrollBox li.on .title::after{
+            display: none;
+        }
+
+        .scrollBox li.on .title::before{
+            background-color: #fff;
         }
 
         .scrollBox li.on .text{
